@@ -27,14 +27,14 @@
     "node": ">=8.2.0"
   },
   "scripts": {
-    "lint:fix": "cross-env ../../node_modules/.bin/prettier --write 'src/**/*.{js,ts}' 'test/**/*.{js,ts}' && npm run lint-src -- --fix && npm run lint-tests -- --fix",
+    "lint:fix": "node ../../node_modules/cross-env/src/bin/cross-env.js ../../node_modules/.bin/prettier --write 'src/**/*.{js,ts}' 'test/**/*.{js,ts}' && npm run lint-src -- --fix && npm run lint-tests -- --fix",
     "lint": "npm run lint-src && npm run lint-tests",
-    "lint-tests": "cross-env NODE_OPTIONS=\"-r ts-node/register\" ../../node_modules/.bin/tslint --config tslint.json --project ./tsconfig.json",
-    "lint-src": "cross-env NODE_OPTIONS=\"-r ts-node/register\" ../../node_modules/.bin/tslint --config tslint.json --project src/tsconfig.json",
-    "test": "cross-env ../../node_modules/.bin/mocha",
-    "coverage": "cross-env ../../node_modules/.bin/nyc ../../node_modules/.bin/mocha",
-    "build": "cross-env ../../node_modules/.bin/tsc --build src",
-    "build-test": "cross-env ../../node_modules/.bin/tsc --build .",
+    "lint-tests": "node ../../node_modules/cross-env/src/bin/cross-env.js NODE_OPTIONS=\"-r ts-node/register\" ../../node_modules/.bin/tslint --config tslint.json --project ./tsconfig.json",
+    "lint-src": "node ../../node_modules/cross-env/src/bin/cross-env.js NODE_OPTIONS=\"-r ts-node/register\" ../../node_modules/.bin/tslint --config tslint.json --project src/tsconfig.json",
+    "test": "node ../../node_modules/cross-env/src/bin/cross-env.js ../../node_modules/.bin/mocha",
+    "coverage": "node ../../node_modules/cross-env/src/bin/cross-env.js ../../node_modules/.bin/nyc ../../node_modules/.bin/mocha",
+    "build": "node ../../node_modules/cross-env/src/bin/cross-env.js ../../node_modules/.bin/tsc --build src",
+    "build-test": "node ../../node_modules/cross-env/src/bin/cross-env.js ../../node_modules/.bin/tsc --build .",
     "clean": "rm -rf builtin-tasks internal *.d.ts *.map *.js build-test tsconfig.tsbuildinfo"
   },
   "files": [
@@ -65,7 +65,6 @@
     "@types/semver": "^6.0.2",
     "@types/uuid": "^3.4.5",
     "chai": "^4.2.0",
-    "cross-env": "^7.0.0",
     "time-require": "^0.1.2"
   },
   "dependencies": {
