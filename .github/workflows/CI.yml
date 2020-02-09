@@ -24,6 +24,9 @@ jobs:
         run: npm install
       # - name: install vyper
       #   run: docker pull ethereum/vyper:0.1.0b10
+      - name: show installed dependencies
+        run: npx lerna exec -- npm ls
+        continue-on-error: true
       - name: lint
         run: npm run lint
         continue-on-error: true
