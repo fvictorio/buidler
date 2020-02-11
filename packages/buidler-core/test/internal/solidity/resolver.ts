@@ -512,7 +512,7 @@ describe("Resolver", function() {
   });
 });
 
-describe("Scoped dependencies project", () => {
+describe.only("Scoped dependencies project", () => {
   const projectName = "scoped-dependency-project";
   useFixtureProject(projectName);
 
@@ -520,6 +520,9 @@ describe("Scoped dependencies project", () => {
     this.resolver = new Resolver(await getFixtureProjectPath(projectName));
     this.resolvedLocalFile = await this.resolver.resolveProjectSourceFile(
       "contracts/A.sol"
+    );
+    this.resolvedLocalFileImportNested = await this.resolver.resolveProjectSourceFile(
+      "contracts/ImportNested.sol"
     );
   });
 
@@ -545,5 +548,18 @@ describe("Scoped dependencies project", () => {
       this.resolver._getLibraryName("library/contracts/Contract.sol"),
       "library"
     );
+  });
+
+  it("should resolve nested imports that use relative dependencies", async function() {
+    const imports = getImports(this.resolvedLocalFileImportNested.content);
+    assert.isAbove(imports.length, 0);
+    assert.equal(imports[0], "@scope/package/contracts/nested/dir/Importer.sol");
+    const resolvedLibrary: ResolvedFile = await this.resolver.resolveImport(
+      this.resolvedLocalFileImportNested,
+      imports[0]
+    );
+    assert.isDefined(resolvedLibrary);
+    assert.equal(resolvedLibrary.globalName, imports[0]);
+    assert.equal(resolvedLibrary.library!.name, "@scope/package");
   });
 });
