@@ -553,5 +553,8 @@ describe.only("Scoped dependencies project", () => {
     );
     const imports = getImports(resolvedImporter.content);
     assert.equal(imports[0], "../A.sol")
+
+    const resolvedImported = await this.resolver.resolveImport(resolvedImporter, imports[0])
+    console.log(resolvedImported);
   });
 });
