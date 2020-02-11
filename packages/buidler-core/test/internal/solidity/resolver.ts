@@ -521,9 +521,6 @@ describe.only("Scoped dependencies project", () => {
     this.resolvedLocalFile = await this.resolver.resolveProjectSourceFile(
       "contracts/A.sol"
     );
-    this.resolvedLocalFileImportNested = await this.resolver.resolveProjectSourceFile(
-      "contracts/ImportNested.sol"
-    );
   });
 
   it("should resolve scoped libraries properly", async function() {
@@ -550,16 +547,11 @@ describe.only("Scoped dependencies project", () => {
     );
   });
 
-  it("should resolve nested imports that use relative dependencies", async function() {
-    const imports = getImports(this.resolvedLocalFileImportNested.content);
-    assert.isAbove(imports.length, 0);
-    assert.equal(imports[0], "@scope/package/contracts/nested/dir/Importer.sol");
-    const resolvedLibrary: ResolvedFile = await this.resolver.resolveImport(
-      this.resolvedLocalFileImportNested,
-      imports[0]
+  it("asdf", async function() {
+    const resolvedImporter = await this.resolver.resolveLibrarySourceFile(
+      "@scope/package/contracts/nested/dir/Importer.sol"
     );
-    assert.isDefined(resolvedLibrary);
-    assert.equal(resolvedLibrary.globalName, imports[0]);
-    assert.equal(resolvedLibrary.library!.name, "@scope/package");
+    const imports = getImports(resolvedImporter.content);
+    assert.equal(imports[0], "../A.sol")
   });
 });
