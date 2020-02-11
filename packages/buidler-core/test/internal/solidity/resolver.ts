@@ -547,7 +547,7 @@ describe.only("Scoped dependencies project", () => {
     );
   });
 
-  it("asdf", async function() {
+  it("should retrieve relative dependency inside library", async function() {
     const resolvedImporter = await this.resolver.resolveLibrarySourceFile(
       "@scope/package/contracts/nested/dir/Importer.sol"
     );
@@ -555,6 +555,6 @@ describe.only("Scoped dependencies project", () => {
     assert.equal(imports[0], "../A.sol")
 
     const resolvedImported = await this.resolver.resolveImport(resolvedImporter, imports[0])
-    console.log(resolvedImported);
+    assert.equal(resolvedImported.globalName, "@scope/package/contracts/nested/A.sol")
   });
 });
